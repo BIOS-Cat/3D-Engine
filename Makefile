@@ -1,5 +1,5 @@
 clean:
-	rm -f test_suite
+	rm -f *.o test_suite
 
 check: clean test_suite.o 
 	gcc -o test_suite test_suite.o `pkg-config --cflags --libs check`
