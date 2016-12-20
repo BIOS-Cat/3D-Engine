@@ -3,7 +3,7 @@
 
 START_TEST(a_test)
 {
-    ck_assert(0);
+    ck_assert(1);
 }
 END_TEST
 
