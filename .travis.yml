@@ -11,4 +11,3 @@ before_install:
     - docker run -v $PWD:/root/engine bioscat/ubuntu /bin/sh -c "cd /root/engine; make check"
 
 script:
-    - make check
