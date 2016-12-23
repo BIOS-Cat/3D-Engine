@@ -4,7 +4,7 @@
 
 START_TEST(we_can_create_an_OpenGL_context)
 {
-    CGLError err1, err2 = 0;
+    CGLError err1, err2, err3;
     CGLPixelFormatAttribute attribs[] =
     {
         kCGLPFAAccelerated,
@@ -16,12 +16,15 @@ START_TEST(we_can_create_an_OpenGL_context)
     };
     CGLPixelFormatObj pixel_format;
     GLint number_pixel_formats = 0;
+    CGLContextObj context;
 
     err1 = CGLChoosePixelFormat(attribs, &pixel_format, &number_pixel_formats);
-    err2 = CGLDestroyPixelFormat(pixel_format);
+    err2 = CGLCreateContext(pixel_format, NULL, &context);
+    err3 = CGLDestroyPixelFormat(pixel_format);
 
     ck_assert_int_eq(err1, kCGLNoError);
     ck_assert_int_eq(err2, kCGLNoError);
+    ck_assert_int_eq(err3, kCGLNoError);
 }
 END_TEST
 
