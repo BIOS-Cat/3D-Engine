@@ -2,6 +2,9 @@ sudo: required
 
 language: c
 
+os:
+    -osx
+
 compiler: clang
 
 before_install:
