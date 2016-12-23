@@ -8,7 +8,7 @@ os:
 compiler: clang
 
 before_install:
-    - sudo apt-get install check
+    - brew install check
 
 script:
     - make
