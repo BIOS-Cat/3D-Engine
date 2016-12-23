@@ -2,13 +2,30 @@
 #include <stdlib.h>
 #include <OpenGL/OpenGL.h>
 
-START_TEST(a_test)
+START_TEST(we_can_create_an_OpenGL_context)
 {
-    ck_assert(1);
+    CGLError err1, err2 = 0;
+    CGLPixelFormatAttribute attribs[] =
+    {
+        kCGLPFAAccelerated,
+        kCGLPFAColorSize, 24,
+        kCGLPFADepthSize, 16,
+        kCGLPFADoubleBuffer,
+        kCGLPFASupersample,
+        0
+    };
+    CGLPixelFormatObj pixel_format;
+    GLint number_pixel_formats = 0;
+
+    err1 = CGLChoosePixelFormat(attribs, &pixel_format, &number_pixel_formats);
+    err2 = CGLDestroyPixelFormat(pixel_format);
+
+    ck_assert_int_eq(err1, kCGLNoError);
+    ck_assert_int_eq(err2, kCGLNoError);
 }
 END_TEST
 
-START_TEST(we_can_create_an_OpenGL_context)
+START_TEST(we_can_choose_an_OpenGL_pixel_format)
 {
     CGLError err = 0;
     CGLPixelFormatAttribute attribs[] = {(CGLPixelFormatAttribute) 0};
@@ -32,7 +49,7 @@ Suite *make_engine_suite()
     tc = tcase_create("Core");
     s = suite_create("suite");
 
-    tcase_add_test(tc, a_test);
+    tcase_add_test(tc, we_can_choose_an_OpenGL_pixel_format);
     tcase_add_test(tc, we_can_create_an_OpenGL_context);
 
     suite_add_tcase(s, tc);
