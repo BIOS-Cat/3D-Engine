@@ -1,3 +1,6 @@
+# Target
+test_suite
+
 # Object files
 *.o
 *.ko

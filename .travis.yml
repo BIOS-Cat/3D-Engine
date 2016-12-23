@@ -2,12 +2,10 @@ sudo: required
 
 language: c
 
-compiler: gcc
-
-services: docker
+compiler: clang
 
 before_install:
-    - docker build -t bioscat/ubuntu .
+    - sudo apt-get install check
 
 script:
-    - docker run -v $PWD:/root/engine bioscat/ubuntu /bin/sh -c "cd /root/engine; make check"
+    - make
