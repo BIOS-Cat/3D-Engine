@@ -25,6 +25,8 @@ START_TEST(we_can_create_an_OpenGL_context)
     ck_assert_int_eq(err1, kCGLNoError);
     ck_assert_int_eq(err2, kCGLNoError);
     ck_assert_int_eq(err3, kCGLNoError);
+
+    CGLDestroyContext(context);
 }
 END_TEST
 
@@ -62,7 +64,7 @@ Suite *make_engine_suite()
 
 int main()
 {
-    int number_failed; 
+    int number_failed;
     Suite *s;
     SRunner *sr;
 
