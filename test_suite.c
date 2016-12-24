@@ -6,8 +6,7 @@
 START_TEST(we_can_query_for_the_OpenGL_version)
 {
     CGLError err1, err2, err3, err4, err5;
-    CGLPixelFormatAttribute attribs[4] = {
-        kCGLPFAAccelerated,
+    CGLPixelFormatAttribute attribs[3] = {
         kCGLPFAOpenGLProfile,
         (CGLPixelFormatAttribute) kCGLOGLPVersion_GL4_Core,
         (CGLPixelFormatAttribute) 0
@@ -40,6 +39,7 @@ START_TEST(we_can_query_for_the_OpenGL_version)
 }
 END_TEST
 
+#if 0
 START_TEST(we_can_create_an_accelerated_OpenGL_context)
 {
     CGLError err1, err2, err3, err4, err5;
@@ -65,6 +65,7 @@ START_TEST(we_can_create_an_accelerated_OpenGL_context)
     ck_assert_int_eq(err5, kCGLNoError);
 }
 END_TEST
+#endif
 
 START_TEST(we_can_create_an_OpenGL_context_with_double_buffering)
 {
@@ -144,7 +145,9 @@ Suite *make_engine_suite()
     tcase_add_test(tc, we_can_choose_an_OpenGL_pixel_format);
     tcase_add_test(tc, we_can_create_an_OpenGL_context);
     tcase_add_test(tc, we_can_create_an_OpenGL_context_with_double_buffering);
+#if 0
     tcase_add_test(tc, we_can_create_an_accelerated_OpenGL_context);
+#endif
     tcase_add_test(tc, we_can_query_for_the_OpenGL_version);
 
     suite_add_tcase(s, tc);
