@@ -2,12 +2,35 @@
 #include <stdlib.h>
 #include <OpenGL/OpenGL.h>
 
+START_TEST(we_can_create_an_OpenGL_context_with_double_buffering)
+{
+    CGLError err1, err2, err3;
+    CGLPixelFormatAttribute attribs[] =
+    {
+        kCGLPFADoubleBuffer,
+        0
+    };
+    CGLPixelFormatObj pixel_format;
+    GLint number_pixel_formats = 0;
+    CGLContextObj context;
+
+    err1 = CGLChoosePixelFormat(attribs, &pixel_format, &number_pixel_formats);
+    err2 = CGLCreateContext(pixel_format, NULL, &context);
+    err3 = CGLDestroyPixelFormat(pixel_format);
+
+    ck_assert_int_eq(err1, kCGLNoError);
+    ck_assert_int_eq(err2, kCGLNoError);
+    ck_assert_int_eq(err3, kCGLNoError);
+
+    CGLDestroyContext(context);
+}
+END_TEST
+
 START_TEST(we_can_create_an_OpenGL_context)
 {
     CGLError err1, err2, err3;
     CGLPixelFormatAttribute attribs[] =
     {
-        kCGLPFDoubleBuffer,
         0
     };
     CGLPixelFormatObj pixel_format;
@@ -52,6 +75,7 @@ Suite *make_engine_suite()
 
     tcase_add_test(tc, we_can_choose_an_OpenGL_pixel_format);
     tcase_add_test(tc, we_can_create_an_OpenGL_context);
+    tcase_add_test(tc, we_can_create_an_OpenGL_context_with_double_buffering);
 
     suite_add_tcase(s, tc);
 
