@@ -1,5 +1,5 @@
-# Target
-test_suite
+# build directory
+build/
 
 # Object files
 *.o
