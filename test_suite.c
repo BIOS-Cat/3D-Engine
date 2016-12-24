@@ -7,11 +7,6 @@ START_TEST(we_can_create_an_OpenGL_context)
     CGLError err1, err2, err3;
     CGLPixelFormatAttribute attribs[] =
     {
-        kCGLPFAAccelerated,
-        kCGLPFAColorSize, 24,
-        kCGLPFADepthSize, 16,
-        kCGLPFADoubleBuffer,
-        kCGLPFASupersample,
         0
     };
     CGLPixelFormatObj pixel_format;
