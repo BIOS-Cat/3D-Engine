@@ -1,11 +1,23 @@
-LDFLAGS=-framework OpenGL `pkg-config --cflags --libs check`
+export BUILDDIR=$(CURDIR)/build
+BUILDSUBDIRS=$(BUILDDIR) $(BUILDDIR)/tests $(BUILDDIR)/lib
+SUBDIRS=src test
 
-check: clean test_suite.o
-	$(CC) -o test_suite test_suite.o $(LDFLAGS)
-	./test_suite
+export CC+=-I$(CURDIR)/include
 
-test_suite.o:
-	$(CC) -Wall -std=c99 -c test_suite.c -o test_suite.o	
-	
+TESTS=$(wildcard $(BUILDDIR)/tests/*_test_suite)
+
+.PHONY: clean test $(SUBDIRS)
+
+all: $(BUILDSUBDIRS) $(SUBDIRS)
+
+$(BUILDSUBDIRS):
+	mkdir $@
+
+$(SUBDIRS):
+	$(MAKE) -C $@
+
+run_test:
+	$(foreach TEST, $(TESTS), $(TEST);)
+
 clean:
-	rm -f *.o test_suite
+	rm -rf $(BUILDDIR)

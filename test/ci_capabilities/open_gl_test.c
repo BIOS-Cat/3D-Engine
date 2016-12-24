@@ -139,8 +139,8 @@ Suite *make_engine_suite()
     Suite *s;
     TCase *tc;
 
+    s = suite_create("OpenGL CI Test");
     tc = tcase_create("Core");
-    s = suite_create("suite");
 
     tcase_add_test(tc, we_can_choose_an_OpenGL_pixel_format);
     tcase_add_test(tc, we_can_create_an_OpenGL_context);
