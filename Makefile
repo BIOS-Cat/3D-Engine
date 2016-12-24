@@ -6,7 +6,7 @@ export CC+=-I$(CURDIR)/include
 
 TESTS=$(wildcard $(BUILDDIR)/tests/*_test_suite)
 
-.PHONY: clean test $(SUBDIRS)
+.PHONY: clean check $(SUBDIRS)
 
 all: $(BUILDSUBDIRS) $(SUBDIRS)
 
@@ -16,7 +16,7 @@ $(BUILDSUBDIRS):
 $(SUBDIRS):
 	$(MAKE) -C $@
 
-run_test:
+check:
 	$(foreach TEST, $(TESTS), $(TEST);)
 
 clean:

@@ -11,4 +11,4 @@ before_install:
     - brew install check
 
 script:
-    - make && make run_test
+    - make && make check
