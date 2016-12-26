@@ -1,9 +1,23 @@
-check: clean test_suite.o
-	$(CC) -o test_suite test_suite.o `pkg-config --cflags --libs check`
-	./test_suite
+export BUILDDIR=$(CURDIR)/build
+BUILDSUBDIRS=$(BUILDDIR) $(BUILDDIR)/tests $(BUILDDIR)/lib
+SUBDIRS=src test
 
-test_suite.o:
-	$(CC) -Wall -std=c99 -c test_suite.c -o test_suite.o	
-	
+export CC+=-I$(CURDIR)/include
+
+TESTS=$(wildcard $(BUILDDIR)/tests/*_test_suite)
+
+.PHONY: clean check $(SUBDIRS)
+
+all: $(BUILDSUBDIRS) $(SUBDIRS)
+
+$(BUILDSUBDIRS):
+	mkdir $@
+
+$(SUBDIRS):
+	$(MAKE) -C $@
+
+check:
+	$(foreach TEST, $(TESTS), $(TEST);)
+
 clean:
-	rm -f *.o test_suite
+	rm -rf $(BUILDDIR)

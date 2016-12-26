@@ -1,9 +1,11 @@
 #include <check.h>
 #include <stdlib.h>
 
-START_TEST(a_test)
+#include <plus/plus.h>
+
+START_TEST(two_plus_three_equals_five)
 {
-    ck_assert(1);
+    ck_assert_int_eq(plus(2, 3), 5);
 }
 END_TEST
 
@@ -12,10 +14,10 @@ Suite *make_engine_suite()
     Suite *s; 
     TCase *tc;
 
+    s = suite_create("Plus");
     tc = tcase_create("Core");
-    s = suite_create("suite");
 
-    tcase_add_test(tc, a_test);
+    tcase_add_test(tc, two_plus_three_equals_five);
 
     suite_add_tcase(s, tc);
 
@@ -32,7 +34,7 @@ int main()
 
     sr = srunner_create(s);
 
-    srunner_run_all(sr, CK_VERBOSE);
+    srunner_run_all(sr, CK_NORMAL);
 
     number_failed = srunner_ntests_failed(sr);
     srunner_free(sr);
