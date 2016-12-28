@@ -39,7 +39,7 @@ START_TEST(we_can_query_for_the_OpenGL_version)
 }
 END_TEST
 
-#if 0
+#ifndef __travis__
 START_TEST(we_can_create_an_accelerated_OpenGL_context)
 {
     CGLError err1, err2, err3, err4, err5;
@@ -145,7 +145,8 @@ Suite *make_engine_suite()
     tcase_add_test(tc, we_can_choose_an_OpenGL_pixel_format);
     tcase_add_test(tc, we_can_create_an_OpenGL_context);
     tcase_add_test(tc, we_can_create_an_OpenGL_context_with_double_buffering);
-#if 0
+
+#ifndef __travis__
     tcase_add_test(tc, we_can_create_an_accelerated_OpenGL_context);
 #endif
     tcase_add_test(tc, we_can_query_for_the_OpenGL_version);

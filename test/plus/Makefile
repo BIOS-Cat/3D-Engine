@@ -5,5 +5,5 @@ LIB=$(BUILDDIR)/lib/plus.o
 
 all: $(TESTS)
 
-$(BUILDDIR)/tests/%_test_suite: %_test.c
+$(BUILDDIR)/tests/%_test_suite: %_test.c $(BUILDDIR)/lib/%.o
 	$(CC) $(CFLAGS) -o $@ $< $(LIB) $(LDFLAGS)
