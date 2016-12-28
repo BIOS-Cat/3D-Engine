@@ -9,6 +9,7 @@ TESTS=$(wildcard $(BUILDDIR)/tests/*_test_suite)
 .PHONY: clean check $(SUBDIRS)
 
 all: $(BUILDSUBDIRS) $(SUBDIRS)
+	$(MAKE) check
 
 $(BUILDSUBDIRS):
 	mkdir $@
