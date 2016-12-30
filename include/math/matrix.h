@@ -1,6 +1,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <math.h>
+
 typedef union {
     float v[3];
     struct {
@@ -39,5 +41,16 @@ static inline vec3 *cross(vec3 *result, const vec3 *const u, const vec3 *const v
 
     return result;
 }
+
+static inline float norm3(const vec3 *const v)
+{
+    return (float) sqrt(dot3(v, v));
+}
+
+static inline float norm4(const vec4 *const v)
+{
+    return (float) sqrt(dot4(v, v));
+}
+
 
 #endif /* MATRIX_H */
