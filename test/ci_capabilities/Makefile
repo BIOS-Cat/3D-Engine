@@ -1,11 +1,8 @@
-TEST_SRCS=$(wildcard *_test.c)
-TESTS=$(BUILDDIR)/tests/$(TEST_SRCS:.c=)_suite
+LDFLAGS+=-framework OpenGL `pkg-config --cflags --libs check`
 
-LDFLAGS+=-framework OpenGL
+all: open_gl_test_suite
 
-all: $(TESTS)
-
-$(BUILDDIR)/tests/%_test_suite: %_test.c
+open_gl_test_suite: open_gl_test_test.c
 ifeq ($(TRAVIS),1)
 	$(CC) $(CFLAGS) -D"__travis__=1" -o $@ $< $(LDFLAGS)
 else
