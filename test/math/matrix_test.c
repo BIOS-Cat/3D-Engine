@@ -1,8 +1,8 @@
 #include <check.h>
 #include <stdlib.h>
 
-#include <minus/minus.h>
-#include "minus_test.h"
+#include <math/matrix.h>
+#include "matrix_test.h"
 
 START_TEST(five_minus_two_equals_three)
 {
@@ -18,12 +18,12 @@ START_TEST(a_failing_test)
 END_TEST
 #endif
 
-Suite *make_minus_suite()
+Suite *make_matrix_suite()
 {
     Suite *s; 
     TCase *tc;
 
-    s = suite_create("Minus");
+    s = suite_create("Matrix");
     tc = tcase_create("Core");
 
     tcase_add_test(tc, five_minus_two_equals_three);
