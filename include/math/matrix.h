@@ -70,5 +70,4 @@ static inline vec4 *scale4(vec4 *result, float s, vec4 *v)
     return result;
 }
 
-
 #endif /* MATRIX_H */
