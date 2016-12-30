@@ -2,7 +2,7 @@ export BUILDDIR=$(CURDIR)/build
 BUILDSUBDIRS=$(BUILDDIR) $(BUILDDIR)/tests $(BUILDDIR)/lib
 SUBDIRS=src test
 
-export CC+=-I$(CURDIR)/include
+export CFLAGS+=-I$(CURDIR)/include
 
 TESTS=$(wildcard $(BUILDDIR)/tests/*_test_suite)
 
