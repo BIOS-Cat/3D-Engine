@@ -2,7 +2,7 @@ export BUILDDIR=$(CURDIR)/build
 BUILDSUBDIRS=$(BUILDDIR) $(BUILDDIR)/test $(BUILDDIR)/lib
 SUBDIRS=src test
 
-export CFLAGS+=-I$(CURDIR)/include
+export CFLAGS+=-I$(CURDIR)/include -std=c99
 
 TEST_SUITE=$(BUILDDIR)/test/test_suite
 
