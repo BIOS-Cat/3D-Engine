@@ -52,5 +52,23 @@ static inline float norm4(const vec4 *const v)
     return (float) sqrt(dot4(v, v));
 }
 
+static inline vec3 *scale3(vec3 *result, float s, vec3 *v)
+{
+    result->v[0] = s * v->v[0];
+    result->v[1] = s * v->v[1];
+    result->v[2] = s * v->v[2];
+
+    return result;
+}
+static inline vec4 *scale4(vec4 *result, float s, vec4 *v)
+{
+    result->v[0] = s * v->v[0];
+    result->v[1] = s * v->v[1];
+    result->v[2] = s * v->v[2];
+    result->v[3] = s * v->v[3];
+
+    return result;
+}
+
 
 #endif /* MATRIX_H */

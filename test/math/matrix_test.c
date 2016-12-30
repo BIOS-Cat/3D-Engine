@@ -3,6 +3,35 @@
 #include <math/matrix.h>
 #include "matrix_test.h"
 
+START_TEST(scale4_scales_a_vec3)
+{
+    vec4 v = {1.0f, 2.0f, 3.0f, 4.0f};
+
+    vec4 result = { };
+
+    scale4(&result, 1.5f, &v);
+
+    ck_assert(result.v[0] == 1.5f);
+    ck_assert(result.v[1] == 3.0f);
+    ck_assert(result.v[2] == 4.5f);
+    ck_assert(result.v[3] == 6.0f);
+}
+END_TEST
+
+START_TEST(scale3_scales_a_vec3)
+{
+    vec3 v = {1.0f, 2.0f, 3.0f};
+
+    vec3 result = { };
+
+    scale3(&result, 1.5f, &v);
+
+    ck_assert(result.v[0] == 1.5f);
+    ck_assert(result.v[1] == 3.0f);
+    ck_assert(result.v[2] == 4.5f);
+}
+END_TEST
+
 START_TEST(norm4_returns_the_norm_of_a_vec4)
 {
     vec4 v = {3.0f, 4.0f, 0.0f, 0.0f};
@@ -54,7 +83,7 @@ END_TEST
 
 Suite *make_matrix_suite()
 {
-    Suite *s; 
+    Suite *s;
     TCase *tc;
 
     s = suite_create("Matrix");
@@ -65,6 +94,8 @@ Suite *make_matrix_suite()
     tcase_add_test(tc, cross_computes_cross_product_correctly);
     tcase_add_test(tc, norm3_returns_the_norm_of_a_vec3);
     tcase_add_test(tc, norm4_returns_the_norm_of_a_vec4);
+    tcase_add_test(tc, scale3_scales_a_vec3);
+    tcase_add_test(tc, scale4_scales_a_vec3);
 
     suite_add_tcase(s, tc);
 
