@@ -1,4 +1,4 @@
-SUBDIRS=plus minus
+SUBDIRS=plus math
 
 .PHONY: $(SUBDIRS)
 
