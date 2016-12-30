@@ -52,7 +52,7 @@ static inline float norm4(const vec4 *const v)
     return (float) sqrt(dot4(v, v));
 }
 
-static inline vec3 *scale3(vec3 *result, float s, vec3 *v)
+static inline vec3 *scale3(vec3 *result, float s, const vec3 *const v)
 {
     result->v[0] = s * v->v[0];
     result->v[1] = s * v->v[1];
@@ -60,7 +60,7 @@ static inline vec3 *scale3(vec3 *result, float s, vec3 *v)
 
     return result;
 }
-static inline vec4 *scale4(vec4 *result, float s, vec4 *v)
+static inline vec4 *scale4(vec4 *result, float s, const vec4 *const v)
 {
     result->v[0] = s * v->v[0];
     result->v[1] = s * v->v[1];
@@ -68,6 +68,16 @@ static inline vec4 *scale4(vec4 *result, float s, vec4 *v)
     result->v[3] = s * v->v[3];
 
     return result;
+}
+
+static inline vec3 *normalize3(vec3 *result, const vec3 *const v)
+{
+    return scale3(result, 1.0f / norm3(v), v);
+}
+
+static inline vec4 *normalize4(vec4 *result, const vec4 *const v)
+{
+    return scale4(result, 1.0f / norm4(v), v);
 }
 
 #endif /* MATRIX_H */
