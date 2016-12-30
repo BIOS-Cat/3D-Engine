@@ -1,9 +1,27 @@
-SUBDIRS=ci_capabilities plus
-export LDFLAGS=`pkg-config --cflags --libs check`
+SUBDIRS=plus minus
 
-.PHONY: $(SUBDIRS)
+TEST_SUITE_SRC=test_suite.c
+TEST_SUITE_OBJ=$(BUILDDIR)/test/$(TEST_SUITE_SRC:.c=.o)
 
-all: $(SUBDIRS)
+TEST_SRCS=$(foreach DIR, $(SUBDIRS), $(wildcard $(DIR)/*_test.c))
+TEST_OBJS=$(addprefix $(BUILDDIR)/test/, $(TEST_SRCS:.c=.o))
+TEST_SUITE=$(BUILDDIR)/test/test_suite
+TEST_BUILDSUBDIRS=$(addprefix $(BUILDDIR)/test/, $(SUBDIRS))
 
-$(SUBDIRS):
-	$(MAKE) -C $@
+PRODUCTION_OBJS=$(wildcard $(BUILDDIR)/lib/*.o)
+
+LDFLAGS+=`pkg-config --cflags --libs check`
+
+all: $(TEST_BUILDSUBDIRS) $(TEST_SUITE)
+
+$(TEST_SUITE): $(TEST_SUITE_OBJ) $(TEST_OBJS)
+	$(CC) $(CFLAGS) -o $@ $^ $(PRODUCTION_OBJS) $(LDFLAGS)
+
+$(TEST_SUITE_OBJ): $(TEST_SUITE_SRC)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(BUILDDIR)/test/%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(TEST_BUILDSUBDIRS):
+	mkdir $@

@@ -1,10 +1,10 @@
 export BUILDDIR=$(CURDIR)/build
-BUILDSUBDIRS=$(BUILDDIR) $(BUILDDIR)/tests $(BUILDDIR)/lib
+BUILDSUBDIRS=$(BUILDDIR) $(BUILDDIR)/test $(BUILDDIR)/lib
 SUBDIRS=src test
 
-export CC+=-I$(CURDIR)/include
+export CFLAGS+=-I$(CURDIR)/include
 
-TESTS=$(wildcard $(BUILDDIR)/tests/*_test_suite)
+TEST_SUITE=$(BUILDDIR)/test/test_suite
 
 .PHONY: clean check $(SUBDIRS)
 
@@ -17,7 +17,7 @@ $(SUBDIRS):
 	$(MAKE) -C $@
 
 check:
-	$(foreach TEST, $(TESTS), $(TEST);)
+	$(TEST_SUITE)
 
 clean:
 	rm -rf $(BUILDDIR)

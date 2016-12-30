@@ -1,6 +1,9 @@
 # build directory
 build/
 
+# one off test suites that happen to not be in build (spikes)
+*_test_suite
+
 # Object files
 *.o
 *.ko
