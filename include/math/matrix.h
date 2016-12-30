@@ -23,6 +23,14 @@ typedef union {
     };
 } vec4;
 
+typedef struct {
+    float m[9];
+} mat3;
+
+typedef struct {
+    float m[16];
+} mat4;
+
 static inline float dot3(const vec3 *const u, const vec3 *const v)
 {
     return u->v[0]*v->v[0] + u->v[1]*v->v[1] + u->v[2]*v->v[2];
@@ -79,5 +87,9 @@ static inline vec4 *normalize4(vec4 *result, const vec4 *const v)
 {
     return scale4(result, 1.0f / norm4(v), v);
 }
+
+mat4 *orthographic_projection_matrix(mat4 *result, float left, float right, float bottom, float top, float near, float far);
+
+mat4 *perspection_projection_matrix(mat4 *result, float aspect_ratio, float field_of_view_angle, float near, float far);
 
 #endif /* MATRIX_H */

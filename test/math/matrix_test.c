@@ -110,6 +110,34 @@ START_TEST(vec3_dot_computes_dot_product_correctly)
 }
 END_TEST
 
+START_TEST(orthographic_projection_matrix_creates_an_orthographic_matrix)
+{
+    mat4 matrix = { };
+
+    orthographic_projection_matrix(&matrix, 30.0, 40.0f, 100.0f, 200.0f, 5.0f, 10.0f);
+
+    ck_assert(matrix.m[0]  == 0.2f);
+    ck_assert(matrix.m[1]  == 0.0f);
+    ck_assert(matrix.m[2]  == 0.0f);
+    ck_assert(matrix.m[3]  == 0.0f);
+
+    ck_assert(matrix.m[4]  == 0.0f);
+    ck_assert(matrix.m[5]  == 0.02f);
+    ck_assert(matrix.m[6]  == 0.0f);
+    ck_assert(matrix.m[7]  == 0.0f);
+
+    ck_assert(matrix.m[8]  == 0.0f);
+    ck_assert(matrix.m[9]  == 0.0f);
+    ck_assert(matrix.m[10] == -0.4f);
+    ck_assert(matrix.m[11] == 0.0f);
+
+    ck_assert(matrix.m[12] == -7.0f);
+    ck_assert(matrix.m[13] == -3.0f);
+    ck_assert(matrix.m[14] == -3.0f);
+    ck_assert(matrix.m[15] == 1.0f);
+}
+END_TEST
+
 Suite *make_matrix_suite()
 {
     Suite *s;
@@ -127,8 +155,10 @@ Suite *make_matrix_suite()
     tcase_add_test(tc, scale4_scales_a_vec3);
     tcase_add_test(tc, normalize3_normalizes_a_vec3);
     tcase_add_test(tc, normalize4_normalizes_a_vec4);
-
     suite_add_tcase(s, tc);
 
+    tc = tcase_create("Projection Matrix");
+    tcase_add_test(tc, orthographic_projection_matrix_creates_an_orthographic_matrix);
+    suite_add_tcase(s, tc);
     return s;
 }
