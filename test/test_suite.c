@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "plus/plus_test.h"
+#include "minus/minus_test.h"
 
 int main()
 {
@@ -10,6 +11,7 @@ int main()
     SRunner *sr;
 
     sr = srunner_create(make_plus_suite());
+    srunner_add_suite(sr, make_minus_suite());
 
     srunner_run_all(sr, CK_NORMAL);
 
