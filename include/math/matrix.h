@@ -182,6 +182,10 @@ static inline vec4 *mat4_vec4_mul(vec4 *result, const mat4 *const mat, const vec
 
 mat4 *orthographic_projection_matrix(mat4 *result, float left, float right, float bottom, float top, float near, float far);
 
-mat4 *perspection_projection_matrix(mat4 *result, float aspect_ratio, float field_of_view_angle, float near, float far);
+mat4 *perspective_projection_matrix(mat4 *result, float aspect_ratio, float field_of_view_angle, float near, float far);
+
+mat3 *rotation_matrix_x(mat3 *result, float angle);
+mat3 *rotation_matrix_y(mat3 *result, float angle);
+mat3 *rotation_matrix_z(mat3 *result, float angle);
 
 #endif /* MATRIX_H */

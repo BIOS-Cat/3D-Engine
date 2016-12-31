@@ -143,7 +143,7 @@ START_TEST(orthographic_projection_matrix_creates_an_orthographic_matrix)
 }
 END_TEST
 
-START_TEST(perspection_projection_matrix_creates_a_perspective_matrix)
+START_TEST(perspective_projection_matrix_creates_a_perspective_matrix)
 {
     mat4 matrix = { };
     mat4 expected = {
@@ -152,7 +152,7 @@ START_TEST(perspection_projection_matrix_creates_a_perspective_matrix)
         0.0f, 0.0f,  1.2f, 1.0f,
         0.0f, 0.0f, -2.2f, 0.0f};
 
-    perspection_projection_matrix(&matrix, 2.0, 90.0f, 1.0f, 11.0f);
+    perspective_projection_matrix(&matrix, 2.0, 90.0f, 1.0f, 11.0f);
 
     ck_assert_mat4_eq(expected, matrix);
 }
@@ -381,6 +381,23 @@ START_TEST(mat4_vec4_mul_allows_the_user_to_pass_the_same_parameter_for_v_as_res
 }
 END_TEST
 
+#define SIN_30 0.5f
+#define COS_30 0.86602540378f
+
+START_TEST(rotation_matrix_x_gives_a_rotation_matrix_around_the_x_axis)
+{
+    mat3 matrix = { };
+    mat3 expected = {
+        1.0f,    0.0f,   0.0f,
+        0.0f,  COS_30, SIN_30,
+        0.0f, -SIN_30, COS_30};
+
+    rotation_matrix_x(&matrix, (float) (M_PI / 180.0f) * 30.0f);
+
+    ck_assert_mat3_eq(expected, matrix);
+}
+END_TEST
+
 Suite *make_matrix_suite()
 {
     Suite *s;
@@ -402,7 +419,7 @@ Suite *make_matrix_suite()
 
     tc = tcase_create("Projection Matrix");
     tcase_add_test(tc, orthographic_projection_matrix_creates_an_orthographic_matrix);
-    tcase_add_test(tc, perspection_projection_matrix_creates_a_perspective_matrix);
+    tcase_add_test(tc, perspective_projection_matrix_creates_a_perspective_matrix);
     suite_add_tcase(s, tc);
 
     tc = tcase_create("Matrix Operations");
@@ -422,6 +439,11 @@ Suite *make_matrix_suite()
     tcase_add_test(tc, mat3_vec3_mul_allows_the_user_to_pass_the_same_parameter_for_v_as_result);
     tcase_add_test(tc, mat4_vec4_mul_allows_the_user_to_pass_the_same_parameter_for_v_as_result);
     suite_add_tcase(s, tc);
+
+    tc = tcase_create("Rotation Matix");
+    tcase_add_test(tc, rotation_matrix_x_gives_a_rotation_matrix_around_the_x_axis);
+    suite_add_tcase(s, tc);
+
 
     return s;
 }

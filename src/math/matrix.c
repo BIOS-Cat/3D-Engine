@@ -27,7 +27,7 @@ mat4 *orthographic_projection_matrix(mat4 *result, float left, float right, floa
     return result;
 }
 
-mat4 *perspection_projection_matrix(mat4 *result, float aspect_ratio, float field_of_view_angle, float near, float far)
+mat4 *perspective_projection_matrix(mat4 *result, float aspect_ratio, float field_of_view_angle, float near, float far)
 {
     float tan_half_fov = (float) tan((M_PI / 180.0f) * field_of_view_angle * 0.5f);
 
@@ -51,5 +51,27 @@ mat4 *perspection_projection_matrix(mat4 *result, float aspect_ratio, float fiel
     result->m[14] = (2.0f * far * near) / (near - far);
     result->m[15] = 0.0f;
 
+    return result;
+}
+
+mat3 *rotation_matrix_x(mat3 *result, float angle)
+{
+    float s = (float) sin(angle);
+    float c = (float) cos(angle);
+
+    result->m[0] = 1.0f; result->m[3] = 0.0f; result->m[6] = 0.0f;
+    result->m[1] = 0.0f; result->m[4] = c;    result->m[7] = -s;
+    result->m[2] = 0.0f; result->m[5] = s;    result->m[8] =  c;
+
+    return result;
+}
+
+mat3 *rotation_matrix_y(mat3 *result, float angle)
+{
+    return result;
+}
+
+mat3 *rotation_matrix_z(mat3 *result, float angle)
+{
     return result;
 }
