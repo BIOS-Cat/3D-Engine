@@ -1,6 +1,6 @@
 #ifndef PLUS_H
 #define PLUS_H
 
-int plus(int a, int b);
+float plus(float a, float b);
 
 #endif
