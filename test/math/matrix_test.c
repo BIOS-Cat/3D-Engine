@@ -3,61 +3,81 @@
 #include <math/matrix.h>
 #include "matrix_test.h"
 
+#define ck_assert_vec3_eq(_U, _V)    \
+{                                    \
+    ck_assert_float_eq(_U.x, _V.x);  \
+    ck_assert_float_eq(_U.y, _V.y);  \
+    ck_assert_float_eq(_U.z, _V.z);  \
+} while(0)
+
+#define ck_assert_vec4_eq(_U, _V)    \
+{                                    \
+    ck_assert_float_eq(_U.x, _V.x);  \
+    ck_assert_float_eq(_U.y, _V.y);  \
+    ck_assert_float_eq(_U.z, _V.z);  \
+    ck_assert_float_eq(_U.w, _V.w);  \
+} while(0)
+
+#define ck_assert_mat3_eq(_A, _B)                                                                                      \
+{                                                                                                                      \
+    ck_assert_float_eq(_A.m[0], _B.m[0]); ck_assert_float_eq(_A.m[3], _B.m[3]); ck_assert_float_eq(_A.m[6], _B.m[6]);  \
+    ck_assert_float_eq(_A.m[1], _B.m[1]); ck_assert_float_eq(_A.m[4], _B.m[4]); ck_assert_float_eq(_A.m[7], _B.m[7]);  \
+    ck_assert_float_eq(_A.m[2], _B.m[2]); ck_assert_float_eq(_A.m[5], _B.m[5]); ck_assert_float_eq(_A.m[8], _B.m[8]);  \
+} while(0)
+
+#define ck_assert_mat4_eq(_A, _B)                                                                                                                                \
+{                                                                                                                                                                \
+    ck_assert_float_eq(_A.m[0], _B.m[0]); ck_assert_float_eq(_A.m[4], _B.m[4]); ck_assert_float_eq(_A.m[8] , _B.m[8]);  ck_assert_float_eq(_A.m[12], _B.m[12]);  \
+    ck_assert_float_eq(_A.m[1], _B.m[1]); ck_assert_float_eq(_A.m[5], _B.m[5]); ck_assert_float_eq(_A.m[9] , _B.m[9]);  ck_assert_float_eq(_A.m[13], _B.m[13]);  \
+    ck_assert_float_eq(_A.m[2], _B.m[2]); ck_assert_float_eq(_A.m[6], _B.m[6]); ck_assert_float_eq(_A.m[10], _B.m[10]); ck_assert_float_eq(_A.m[14], _B.m[14]);  \
+    ck_assert_float_eq(_A.m[3], _B.m[3]); ck_assert_float_eq(_A.m[7], _B.m[7]); ck_assert_float_eq(_A.m[11], _B.m[11]); ck_assert_float_eq(_A.m[15], _B.m[15]);  \
+} while(0)
+
 START_TEST(normalize4_normalizes_a_vec4)
 {
     vec4 v = {1.25f, 0.0f, 0.0f, 0.0f};
-
+    vec4 expected = {1.0f, 0.0f, 0.0f, 0.0f};
     vec4 result = { };
 
     normalize4(&result, &v);
 
-    ck_assert_float_eq(result.v[0], 1.0f);
-    ck_assert_float_eq(result.v[1], 0.0f);
-    ck_assert_float_eq(result.v[2], 0.0f);
-    ck_assert_float_eq(result.v[3], 0.0f);
+    ck_assert_vec4_eq(result, expected);
 }
 END_TEST
 
 START_TEST(normalize3_normalizes_a_vec3)
 {
     vec3 v = {1.25f, 0.0f, 0.0f};
-
+    vec3 expected = {1.0f, 0.0f, 0.0f};
     vec3 result = { };
 
     normalize3(&result, &v);
 
-    ck_assert_float_eq(result.v[0], 1.0f);
-    ck_assert_float_eq(result.v[1], 0.0f);
-    ck_assert_float_eq(result.v[2], 0.0f);
+    ck_assert_vec3_eq(result, expected);
 }
 END_TEST
 
-START_TEST(scale4_scales_a_vec3)
+START_TEST(scale4_scales_a_vec4)
 {
     vec4 v = {1.0f, 2.0f, 3.0f, 4.0f};
-
+    vec4 expected = {1.5f, 3.0f, 4.5f, 6.0f};
     vec4 result = { };
 
     scale4(&result, 1.5f, &v);
 
-    ck_assert_float_eq(result.v[0], 1.5f);
-    ck_assert_float_eq(result.v[1], 3.0f);
-    ck_assert_float_eq(result.v[2], 4.5f);
-    ck_assert_float_eq(result.v[3], 6.0f);
+    ck_assert_vec4_eq(result, expected);
 }
 END_TEST
 
 START_TEST(scale3_scales_a_vec3)
 {
     vec3 v = {1.0f, 2.0f, 3.0f};
-
+    vec3 expected = {1.5f, 3.0f, 4.5f};
     vec3 result = { };
 
     scale3(&result, 1.5f, &v);
 
-    ck_assert_float_eq(result.v[0], 1.5f);
-    ck_assert_float_eq(result.v[1], 3.0f);
-    ck_assert_float_eq(result.v[2], 4.5f);
+    ck_assert_vec3_eq(result, expected);
 }
 END_TEST
 
@@ -81,14 +101,12 @@ START_TEST(cross_computes_cross_product_correctly)
 {
     vec3 u = {1.0f, 2.0f, 3.0f};
     vec3 v = {4.0f, 5.0f, 6.0f};
-
+    vec3 expected = {-3.0f, 6.0f, -3.0f};
     vec3 result = { };
 
     cross(&result, &u, &v);
 
-    ck_assert_float_eq(result.v[0], -3.0f);
-    ck_assert_float_eq(result.v[1],  6.0f);
-    ck_assert_float_eq(result.v[2], -3.0f);
+    ck_assert_vec3_eq(result, expected);
 }
 END_TEST
 
@@ -113,56 +131,30 @@ END_TEST
 START_TEST(orthographic_projection_matrix_creates_an_orthographic_matrix)
 {
     mat4 matrix = { };
+    mat4 expected = {                   // Recall that matrices in OpenGL are column major, so this
+         0.2f,  0.0f,   0.0f, 0.0f,     // is written as the transpose of how it is represented in memory.
+         0.0f,  0.02f , 0.0f, 0.0f,
+         0.0f,  0.0f,  -0.4f, 0.0f,
+        -7.0f, -3.0f,  -3.0f, 1.0f};
 
     orthographic_projection_matrix(&matrix, 30.0, 40.0f, 100.0f, 200.0f, 5.0f, 10.0f);
 
-    ck_assert_float_eq(matrix.m[0] , 0.2f);
-    ck_assert_float_eq(matrix.m[1] , 0.0f);
-    ck_assert_float_eq(matrix.m[2] , 0.0f);
-    ck_assert_float_eq(matrix.m[3] , 0.0f);
-
-    ck_assert_float_eq(matrix.m[4] , 0.0f);
-    ck_assert_float_eq(matrix.m[5] , 0.02f);
-    ck_assert_float_eq(matrix.m[6] , 0.0f);
-    ck_assert_float_eq(matrix.m[7] , 0.0f);
-
-    ck_assert_float_eq(matrix.m[8] , 0.0f);
-    ck_assert_float_eq(matrix.m[9] , 0.0f);
-    ck_assert_float_eq(matrix.m[10], -0.4f);
-    ck_assert_float_eq(matrix.m[11], 0.0f);
-
-    ck_assert_float_eq(matrix.m[12], -7.0f);
-    ck_assert_float_eq(matrix.m[13], -3.0f);
-    ck_assert_float_eq(matrix.m[14], -3.0f);
-    ck_assert_float_eq(matrix.m[15], 1.0f);
+    ck_assert_mat4_eq(expected, matrix);
 }
 END_TEST
 
 START_TEST(perspection_projection_matrix_creates_a_perspective_matrix)
 {
     mat4 matrix = { };
+    mat4 expected = {
+        0.5f, 0.0f,  0.0f, 0.0f,
+        0.0f, 1.0f,  0.0f, 0.0f,
+        0.0f, 0.0f,  1.2f, 1.0f,
+        0.0f, 0.0f, -2.2f, 0.0f};
 
     perspection_projection_matrix(&matrix, 2.0, 90.0f, 1.0f, 11.0f);
 
-    ck_assert_float_eq(matrix.m[0] , 0.5f);
-    ck_assert_float_eq(matrix.m[1] , 0.0f);
-    ck_assert_float_eq(matrix.m[2] , 0.0f);
-    ck_assert_float_eq(matrix.m[3] , 0.0f);
-
-    ck_assert_float_eq(matrix.m[4] , 0.0f);
-    ck_assert_float_eq(matrix.m[5] , 1.0f);
-    ck_assert_float_eq(matrix.m[6] , 0.0f);
-    ck_assert_float_eq(matrix.m[7] , 0.0f);
-
-    ck_assert_float_eq(matrix.m[8] , 0.0f);
-    ck_assert_float_eq(matrix.m[9] , 0.0f);
-    ck_assert_float_eq(matrix.m[10], 1.2f);
-    ck_assert_float_eq(matrix.m[11], 1.0f);
-
-    ck_assert_float_eq(matrix.m[12], 0.0f);
-    ck_assert_float_eq(matrix.m[13], 0.0f);
-    ck_assert_float_eq(matrix.m[14], -2.2f);
-    ck_assert_float_eq(matrix.m[15], 0.0f);
+    ck_assert_mat4_eq(expected, matrix);
 }
 END_TEST
 
@@ -180,7 +172,7 @@ Suite *make_matrix_suite()
     tcase_add_test(tc, norm3_returns_the_norm_of_a_vec3);
     tcase_add_test(tc, norm4_returns_the_norm_of_a_vec4);
     tcase_add_test(tc, scale3_scales_a_vec3);
-    tcase_add_test(tc, scale4_scales_a_vec3);
+    tcase_add_test(tc, scale4_scales_a_vec4);
     tcase_add_test(tc, normalize3_normalizes_a_vec3);
     tcase_add_test(tc, normalize4_normalizes_a_vec4);
     suite_add_tcase(s, tc);
