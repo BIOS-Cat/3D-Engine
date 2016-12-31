@@ -1,6 +1,6 @@
 #include <plus/plus.h>
 
-int plus(int a, int b)
+float plus(float a, float b)
 {
     return a + b;
 }
