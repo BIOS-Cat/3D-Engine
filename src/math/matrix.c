@@ -46,10 +46,10 @@ mat4 *perspection_projection_matrix(mat4 *result, float aspect_ratio, float fiel
     result->m[10] = -(far + near) / (near - far);
     result->m[11] = 1.0f;
 
-    result->m[11] = 0.0f;
     result->m[12] = 0.0f;
-    result->m[13] = (2.0f * far * near) / (near - far);
-    result->m[14] = 0.0f;
+    result->m[13] = 0.0f;
+    result->m[14] = (2.0f * far * near) / (near - far);
+    result->m[15] = 0.0f;
 
     return result;
 }
