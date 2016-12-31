@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include <check.h>
 
 #include <math/matrix.h>
@@ -138,6 +140,36 @@ START_TEST(orthographic_projection_matrix_creates_an_orthographic_matrix)
 }
 END_TEST
 
+START_TEST(perspection_projection_matrix_creates_a_perspective_matrix)
+{
+    mat4 matrix = { };
+
+    perspection_projection_matrix(&matrix, 2.0, 90.0f, 1.0f, 11.0f);
+
+    printf("\n\n\n\n");
+
+    ck_assert(matrix.m[0]  == 0.2f);
+    ck_assert(matrix.m[1]  == 0.0f);
+    ck_assert(matrix.m[2]  == 0.0f);
+    ck_assert(matrix.m[3]  == 0.0f);
+
+    ck_assert(matrix.m[4]  == 0.0f);
+    ck_assert(matrix.m[5]  == 0.02f);
+    ck_assert(matrix.m[6]  == 0.0f);
+    ck_assert(matrix.m[7]  == 0.0f);
+
+    ck_assert(matrix.m[8]  == 0.0f);
+    ck_assert(matrix.m[9]  == 0.0f);
+    ck_assert(matrix.m[10] == -0.4f);
+    ck_assert(matrix.m[11] == 0.0f);
+
+    ck_assert(matrix.m[12] == -7.0f);
+    ck_assert(matrix.m[13] == -3.0f);
+    ck_assert(matrix.m[14] == -3.0f);
+    ck_assert(matrix.m[15] == 1.0f);
+}
+END_TEST
+
 Suite *make_matrix_suite()
 {
     Suite *s;
@@ -159,6 +191,7 @@ Suite *make_matrix_suite()
 
     tc = tcase_create("Projection Matrix");
     tcase_add_test(tc, orthographic_projection_matrix_creates_an_orthographic_matrix);
+    tcase_add_test(tc, perspection_projection_matrix_creates_a_perspective_matrix);
     suite_add_tcase(s, tc);
     return s;
 }
