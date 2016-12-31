@@ -1,4 +1,4 @@
-SUBDIRS=plus minus
+SUBDIRS=plus math
 
 TEST_SUITE_SRC=test_suite.c
 TEST_SUITE_OBJ=$(BUILDDIR)/test/$(TEST_SUITE_SRC:.c=.o)
