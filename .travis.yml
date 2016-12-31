@@ -8,7 +8,7 @@ os:
 compiler: clang
 
 before_install:
-    - brew install check
+    - bin/install_libcheck.sh
 
 script:
     - make && make check
