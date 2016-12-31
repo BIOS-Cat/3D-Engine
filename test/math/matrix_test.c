@@ -158,6 +158,86 @@ START_TEST(perspection_projection_matrix_creates_a_perspective_matrix)
 }
 END_TEST
 
+START_TEST(mat3_mul_multiplies_two_matrices)
+{
+    mat3 result = { };
+    mat3 mat_A = {
+        1.0f, 2.0f, 3.0f,
+        4.0f, 5.0f, 6.0f,
+        7.0f, 8.0f, 9.0f};
+    mat3 mat_B = {
+        3.0f, -2.0f, 1.0f,
+        4.0f, 5.0f, 1.0f,
+        6.0f, 1.0f, 0.0f};
+    mat3 expected = {
+        2.0f, 4.0f, 6.0f,
+        31.0f, 41.0f, 51.0f,
+        10.0f, 17.0f, 24.0f};
+
+    mat3_mul(&result, &mat_A, &mat_B);
+
+    ck_assert_mat3_eq(expected, result);
+}
+END_TEST
+
+START_TEST(mat4_mul_multiplies_two_matrices)
+{
+    mat4 result = { };
+    mat4 mat_A = {
+         1.0f,  2.0f,  3.0f,  4.0f,
+         5.0f,  6.0f,  7.0f,  8.0f,
+         9.0f, 10.0f, 11.0f, 12.0f,
+        13.0f, 14.0f, 15.0f, 16.0f};
+    mat4 mat_B = {
+         2.0f,  1.0f,  1.0f,  1.0f,
+         4.0f, -6.0f,  0.0f,  3.0f,
+         9.0f, 11.0f, 10.0f, -2.0f,
+        -1.0f, -9.0f, 15.0f, -7.0f};
+    mat4 expected = {
+        29.0f, 34.0f, 39.0f, 44.0f,
+        13.0f, 14.0f, 15.0f, 16.0f,
+        128.0f, 156.0f, 184.0f, 212.0f,
+        -2.0f, -4.0f, -6.0f, -8.0f};
+
+    mat4_mul(&result, &mat_A, &mat_B);
+
+    ck_assert_mat4_eq(expected, result);
+}
+END_TEST
+
+START_TEST(mat3_vec3_mul_multiplies_a_vector_by_a_matrix)
+{
+    vec3 result = { };
+    mat3 mat = {
+        1.0f, 2.0f, 3.0f,
+        4.0f, 5.0f, 6.0f,
+        7.0f, 8.0f, 9.0f};
+    vec3 v = {3.0f, -2.0f, 1.0f};
+    vec3 expected = {2.0f, 4.0f, 6.0f};
+
+    mat3_vec3_mul(&result, &mat, &v);
+
+    ck_assert_vec3_eq(expected, result);
+}
+END_TEST
+
+START_TEST(mat4_vec4_mul_multiplies_a_vector_by_a_matrix)
+{
+    vec4 result = { };
+    mat4 mat = {
+         1.0f,  2.0f,  3.0f,  4.0f,
+         5.0f,  6.0f,  7.0f,  8.0f,
+         9.0f, 10.0f, 11.0f, 12.0f,
+        13.0f, 14.0f, 15.0f, 16.0f};
+    vec4 v = {-7.0f, -2.0f, 10.0f, 0.0f};
+    vec4 expected = {73.0f, 74.0f, 75.0f, 76.0f};
+
+    mat4_vec4_mul(&result, &mat, &v);
+
+    ck_assert_vec4_eq(expected, result);
+}
+END_TEST
+
 Suite *make_matrix_suite()
 {
     Suite *s;
@@ -181,5 +261,13 @@ Suite *make_matrix_suite()
     tcase_add_test(tc, orthographic_projection_matrix_creates_an_orthographic_matrix);
     tcase_add_test(tc, perspection_projection_matrix_creates_a_perspective_matrix);
     suite_add_tcase(s, tc);
+
+    tc = tcase_create("Matrix Operations");
+    tcase_add_test(tc, mat3_mul_multiplies_two_matrices);
+    tcase_add_test(tc, mat4_mul_multiplies_two_matrices);
+    tcase_add_test(tc, mat3_vec3_mul_multiplies_a_vector_by_a_matrix);
+    tcase_add_test(tc, mat4_vec4_mul_multiplies_a_vector_by_a_matrix);
+    suite_add_tcase(s, tc);
+
     return s;
 }
