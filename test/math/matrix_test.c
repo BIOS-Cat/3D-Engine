@@ -398,14 +398,42 @@ START_TEST(rotation_matrix_x_gives_a_rotation_matrix_around_the_x_axis)
 }
 END_TEST
 
+START_TEST(rotation_matrix_x_gives_a_rotation_matrix_around_the_y_axis)
+{
+    mat3 matrix = { };
+    mat3 expected = {
+        COS_30, 0.0f, -SIN_30,
+        0.0f,   1.0f,  0.0f,
+        SIN_30, 0.0f,  COS_30};
+
+    rotation_matrix_y(&matrix, (float) (M_PI / 180.0f) * 30.0f);
+
+    ck_assert_mat3_eq(expected, matrix);
+}
+END_TEST
+
+START_TEST(rotation_matrix_x_gives_a_rotation_matrix_around_the_z_axis)
+{
+    mat3 matrix = { };
+    mat3 expected = {
+         COS_30, SIN_30, 0.0f,
+        -SIN_30, COS_30, 0.0f,
+         0.0f,   0.0f,   1.0f};
+
+    rotation_matrix_z(&matrix, (float) (M_PI / 180.0f) * 30.0f);
+
+    ck_assert_mat3_eq(expected, matrix);
+}
+END_TEST
+
 Suite *make_matrix_suite()
 {
     Suite *s;
     TCase *tc;
 
     s = suite_create("Matrix and Vectors");
-    tc = tcase_create("Vectors");
 
+    tc = tcase_create("Vectors");
     tcase_add_test(tc, vec3_dot_computes_dot_product_correctly);
     tcase_add_test(tc, vec4_dot_computes_dot_product_correctly);
     tcase_add_test(tc, cross_computes_cross_product_correctly);
@@ -442,8 +470,9 @@ Suite *make_matrix_suite()
 
     tc = tcase_create("Rotation Matix");
     tcase_add_test(tc, rotation_matrix_x_gives_a_rotation_matrix_around_the_x_axis);
+    tcase_add_test(tc, rotation_matrix_x_gives_a_rotation_matrix_around_the_y_axis);
+    tcase_add_test(tc, rotation_matrix_x_gives_a_rotation_matrix_around_the_z_axis);
     suite_add_tcase(s, tc);
-
 
     return s;
 }

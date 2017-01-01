@@ -68,10 +68,24 @@ mat3 *rotation_matrix_x(mat3 *result, float angle)
 
 mat3 *rotation_matrix_y(mat3 *result, float angle)
 {
+    float s = (float) sin(angle);
+    float c = (float) cos(angle);
+
+    result->m[0] =  c;    result->m[3] = 0.0f; result->m[6] = s;
+    result->m[1] =  0.0f; result->m[4] = 1.0f; result->m[7] = 0.0f;
+    result->m[2] = -s;    result->m[5] = 0.0f; result->m[8] = c;
+
     return result;
 }
 
 mat3 *rotation_matrix_z(mat3 *result, float angle)
 {
+    float s = (float) sin(angle);
+    float c = (float) cos(angle);
+
+    result->m[0] = c;    result->m[3] = -s;    result->m[6] = 0.0f;
+    result->m[1] = s;    result->m[4] =  c;    result->m[7] = 0.0f;
+    result->m[2] = 0.0f; result->m[5] =  0.0f; result->m[8] = 1.0f;
+
     return result;
 }
