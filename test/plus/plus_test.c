@@ -6,7 +6,7 @@
 
 START_TEST(two_plus_three_equals_five)
 {
-    ck_assert_int_eq(plus(2, 3), 5);
+    ck_assert_float_eq(plus(2.0f, 3.0f), 5.0f);
 }
 END_TEST
 
