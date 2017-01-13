@@ -1,7 +1,7 @@
 #ifndef ASSETS_H
 #define ASSETS_H
 
-#include <OpenGL.h> // Need this for GLGLfloat and GLuint types
+#include <OpenGL/gl3.h> // Need this for GLGLfloat and GLuint types
 
 /*
  *  Just some basic assets which can be used to test out 2D/3D graphics.
