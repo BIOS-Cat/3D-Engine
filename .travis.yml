@@ -9,6 +9,7 @@ compiler: clang
 
 before_install:
     - bin/install_libcheck.sh
+    - bin/install_sdl2.sh
 
 script:
     - make && make check
