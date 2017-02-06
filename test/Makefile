@@ -10,7 +10,7 @@ TEST_BUILDSUBDIRS=$(addprefix $(BUILDDIR)/test/, $(SUBDIRS))
 
 PRODUCTION_OBJS=$(wildcard $(BUILDDIR)/lib/*.o)
 
-LDFLAGS+= -framework SDL2 -framework OpenGL `pkg-config --cflags --libs check`
+LDFLAGS+= `pkg-config --cflags --libs sdl2` -framework OpenGL `pkg-config --cflags --libs check`
 
 all: $(TEST_BUILDSUBDIRS) $(TEST_SUITE)
 
