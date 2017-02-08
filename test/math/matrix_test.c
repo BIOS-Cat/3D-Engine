@@ -3,6 +3,10 @@
 #include <math/matrix.h>
 #include "matrix_test.h"
 
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
 #define ck_assert_vec3_eq(_U, _V)    \
 {                                    \
     ck_assert_float_eq(_U.x, _V.x);  \

@@ -2,6 +2,10 @@
 
 #include <math.h>
 
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
 mat4 *orthographic_projection_matrix(mat4 *result, float left, float right, float bottom, float top, float near, float far)
 {
     result->m[0]  =  2.0f / (right - left);
