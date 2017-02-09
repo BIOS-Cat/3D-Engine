@@ -3,6 +3,9 @@ FROM ubuntu:14.04
 RUN apt-get update && apt-get install -y \
    build-essential \
    curl \
+   libglu1-mesa-dev \
+   freeglut3-dev \
+   mesa-common-dev \
    autoconf \
    libtool \
    git \
